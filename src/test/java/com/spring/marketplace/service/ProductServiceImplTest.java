@@ -6,6 +6,7 @@ import com.spring.marketplace.dto.UpdateProductDto;
 import com.spring.marketplace.exception.ApplicationException;
 import com.spring.marketplace.model.Product;
 import com.spring.marketplace.repository.ProductRepository;
+import com.spring.marketplace.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,6 +1,7 @@
-package com.spring.marketplace.service;
+package com.spring.marketplace.service.impl;
 
 import com.spring.marketplace.exception.ApplicationException;
+import com.spring.marketplace.service.FileStorageService;
 import com.spring.marketplace.utils.enums.ErrorType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

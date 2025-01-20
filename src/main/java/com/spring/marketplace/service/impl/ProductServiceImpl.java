@@ -1,4 +1,4 @@
-package com.spring.marketplace.service;
+package com.spring.marketplace.service.impl;
 
 import com.spring.marketplace.aspects.LogExecutionTime;
 import com.spring.marketplace.dto.CreateProductDto;
@@ -8,10 +8,11 @@ import com.spring.marketplace.dto.UpdateProductDto;
 import com.spring.marketplace.exception.ApplicationException;
 import com.spring.marketplace.model.Product;
 import com.spring.marketplace.repository.ProductRepository;
+import com.spring.marketplace.service.ProductService;
+import com.spring.marketplace.service.ReportService;
 import com.spring.marketplace.specification.ProductSpecification;
 import com.spring.marketplace.utils.enums.ErrorType;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.PageRequest;
@@ -58,8 +59,8 @@ public class ProductServiceImpl implements ProductService {
                     log.error("Product with id {} not found", id);
                     return new ApplicationException(ErrorType.PRODUCT_NOT_FOUND);
                 });
-        log.info("Product found: {}", product);
 
+        log.info("Product found: {}", product);
         return product;
     }
 

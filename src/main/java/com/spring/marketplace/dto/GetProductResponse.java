@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Builder;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@Setter
 @Builder
 public class GetProductResponse {
 

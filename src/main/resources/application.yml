@@ -14,6 +14,8 @@ app:
       path: C:\\marketplace\\marketplace\\src\\main\\resources\\reports\\
     download-upload:
       path: C:\\marketplace\\marketplace\\src\\main\\resources\\files\\
+    json:
+      path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
 
 server.port: 8081
 

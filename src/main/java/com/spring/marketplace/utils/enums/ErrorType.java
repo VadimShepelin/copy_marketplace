@@ -7,7 +7,8 @@ public enum ErrorType {
     FAILED_TO_GET_LIST_OF_FILES("Failed to get list of files"),
     UNIQUE_CONSTRAINT_EXCEPTION("A product with the same sku already exists"),
     FAILED_TO_UPLOAD_FILE("Failed to upload file"),
-    FAILED_TO_DOWNLOAD_FILE("Failed to download file");
+    FAILED_TO_DOWNLOAD_FILE("Failed to download file"),
+    FAILED_TO_CONVERT_CURRENCY("Failed to convert currency"),;
 
 
     private final String message;

@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 @Service
 @Slf4j
-public class ReportService  {
+public class ReportService {
 
     @Value("${app.file.path}")
     private String fileBasePath;
