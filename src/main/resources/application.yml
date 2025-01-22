@@ -1,10 +1,11 @@
 spring.application.name: marketplace
 
-spring.datasource:
-  password: ILin47gim
-  username: postgres
-  url: jdbc:postgresql://localhost:5432/marketplace
-  driver-class-name: org.postgresql.Driver
+spring:
+  datasource:
+     password: ILin47gim
+     username: postgres
+     url: jdbc:postgresql://localhost:5432/marketplace
+     driver-class-name: org.postgresql.Driver
 
 app:
     scheduling:
@@ -18,5 +19,4 @@ app:
       path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
 
 server.port: 8081
-
 
