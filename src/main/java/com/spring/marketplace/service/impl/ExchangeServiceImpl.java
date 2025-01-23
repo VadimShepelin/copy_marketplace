@@ -1,17 +1,18 @@
 package com.spring.marketplace.service.impl;
 
+import com.spring.marketplace.client.RateServiceClient;
 import com.spring.marketplace.exception.ApplicationException;
 import com.spring.marketplace.service.ExchangeService;
-import com.spring.marketplace.service.RateService;
 import com.spring.marketplace.utils.enums.ErrorType;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import java.io.FileReader;
 import java.math.BigDecimal;
 
@@ -22,10 +23,10 @@ public class ExchangeServiceImpl implements ExchangeService<BigDecimal,BigDecima
 
     @Value("${app.json.path}")
     private String pathToJson;
-    private final RateService rateService;
+    private final RateServiceClient rateServiceClient;
+    private final JedisPool jedisPool;
 
     @Override
-    @SneakyThrows
     public BigDecimal convertCurrency(BigDecimal from) {
         try(FileReader fileReader = new FileReader(pathToJson)){
             JSONParser parser = new JSONParser();
@@ -42,15 +43,14 @@ public class ExchangeServiceImpl implements ExchangeService<BigDecimal,BigDecima
     }
 
     @Override
-    @SneakyThrows
+    @Cacheable("exchangeRate")
     public BigDecimal convertCurrencyWithCache(BigDecimal object) {
-        try(Jedis jedis = new Jedis("localhost",6379)){
-            BigDecimal exchangeRate = jedis.exists("exchangeRate")?
-                    new BigDecimal(jedis.get("exchangeRate")):
-                    new BigDecimal(rateService.getExchangeRate());
+        try(Jedis jedis = jedisPool.getResource()){
+            String exchangeRate = rateServiceClient.getRateValue();
+            log.info("call rate service getRateValue() method");
+            jedis.set("exchangeRate", exchangeRate);
 
-            log.info("convertCurrencyWithCache worked successfully");
-            return object.divide(exchangeRate, 2, BigDecimal.ROUND_HALF_UP);
+            return object.divide(new BigDecimal(exchangeRate), 2, BigDecimal.ROUND_HALF_UP);
         }
         catch (Exception exception){
             log.error(exception.getMessage());
