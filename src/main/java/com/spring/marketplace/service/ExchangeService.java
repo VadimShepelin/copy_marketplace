@@ -3,4 +3,5 @@ package com.spring.marketplace.service;
 public interface ExchangeService<T,K>{
 
     K convertCurrency(T object);
+    K convertCurrencyWithCache(T object);
 }
