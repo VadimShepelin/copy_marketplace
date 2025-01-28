@@ -50,5 +50,4 @@ public class ProductController {
         return productService.searchProductsWithFilter(productDto);
     }
 
-
 }

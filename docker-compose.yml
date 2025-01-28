@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  api:
+    image: app
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: api
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    env_file:
+      - docker.env
+
+  rate:
+    image: rate
+    build:
+      context: ./rate-service
+      dockerfile: Dockerfile
+    container_name: rate
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - redis

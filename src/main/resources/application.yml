@@ -6,6 +6,10 @@ spring:
      username: postgres
      url: jdbc:postgresql://localhost:5432/marketplace
      driver-class-name: org.postgresql.Driver
+  redis:
+    host: localhost
+    port: 6379
+    time-to-live: 60
 
 app:
     scheduling:
@@ -17,6 +21,8 @@ app:
       path: C:\\marketplace\\marketplace\\src\\main\\resources\\files\\
     json:
       path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
+    feign-client:
+      url: http://localhost:8080/
 
 server.port: 8081
 

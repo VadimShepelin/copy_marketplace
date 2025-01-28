@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -23,6 +22,8 @@ public class ExchangeServiceImpl implements ExchangeService<BigDecimal,BigDecima
 
     @Value("${app.json.path}")
     private String pathToJson;
+    @Value("${spring.redis.time-to-live}")
+    private long redisTtl;
     private final RateServiceClient rateServiceClient;
     private final JedisPool jedisPool;
 
@@ -43,19 +44,24 @@ public class ExchangeServiceImpl implements ExchangeService<BigDecimal,BigDecima
     }
 
     @Override
-    @Cacheable("exchangeRate")
     public BigDecimal convertCurrencyWithCache(BigDecimal object) {
-        try(Jedis jedis = jedisPool.getResource()){
+        try(Jedis jedis = jedisPool.getResource()) {
+            if(jedis.exists("exchangeRate")){
+                log.info("Get exchange rate from cache");
+                return object.divide(new BigDecimal(jedis.get("exchangeRate")), 2, BigDecimal.ROUND_HALF_UP);
+            }
+
             String exchangeRate = rateServiceClient.getRateValue();
             log.info("call rate service getRateValue() method");
-            jedis.set("exchangeRate", exchangeRate);
+            jedis.setex("exchangeRate",redisTtl,exchangeRate);
 
             return object.divide(new BigDecimal(exchangeRate), 2, BigDecimal.ROUND_HALF_UP);
         }
-        catch (Exception exception){
-            log.error(exception.getMessage());
+        catch (Exception ex){
+            log.error(ex.getMessage());
             return convertCurrency(object);
         }
+
     }
 
 
