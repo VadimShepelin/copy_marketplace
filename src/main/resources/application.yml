@@ -8,21 +8,23 @@ spring:
      driver-class-name: org.postgresql.Driver
   redis:
     host: localhost
-    port: 6379
-    time-to-live: 60
+    port: 6378
+    time-to-live: 10
 
 app:
-    scheduling:
-      period: 30000
-      enabled: true
-    file:
-      path: C:\\marketplace\\marketplace\\src\\main\\resources\\reports\\
-    download-upload:
-      path: C:\\marketplace\\marketplace\\src\\main\\resources\\files\\
-    json:
-      path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
-    feign-client:
-      url: http://localhost:8080/
+  default:
+    rate-value: 1
+  scheduling:
+    period: 30000
+    enabled: true
+  file:
+    path: C:\\marketplace\\marketplace\\src\\main\\resources\\reports\\
+  download-upload:
+    path: C:\\marketplace\\marketplace\\src\\main\\resources\\files\\
+  json:
+    path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
+  feign-client:
+    url: http://localhost:8080/
 
 server.port: 8081
 

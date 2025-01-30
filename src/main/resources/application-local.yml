@@ -6,10 +6,12 @@ spring:
     driverClassName: org.h2.Driver
   redis:
     host: localhost
-    port: 6379
-    time-to-live: 60
+    port: 6378
+    time-to-live: 10
 
 app:
+  default:
+    rate-value: 1
   scheduling:
     period: 30000
     enabled: true

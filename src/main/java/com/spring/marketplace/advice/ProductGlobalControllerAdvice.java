@@ -29,7 +29,8 @@ public class ProductGlobalControllerAdvice implements ResponseBodyAdvice<GetProd
     @Override
     public GetProductResponse beforeBodyWrite(GetProductResponse body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         Optional.of(body).ifPresentOrElse((item) -> {
-            body.setPrice(exchangeService.convertCurrencyWithCache(body.getPrice()));
+            String rate = String.join("", request.getHeaders().get("rate")!=null?request.getHeaders().get("rate").get(0):"");
+            body.setPrice(exchangeService.convertCurrencyWithCache(body.getPrice(),rate));
             log.info("ProductGlobalControllerAdvice worked successfully");
         }, () -> {
             log.error("ProductGlobalControllerAdvice failed");
