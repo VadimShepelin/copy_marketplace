@@ -11,7 +11,7 @@ services:
   api:
     image: app
     build:
-      context: ./src
+      context: src
       dockerfile: Dockerfile
     container_name: api
     restart: always

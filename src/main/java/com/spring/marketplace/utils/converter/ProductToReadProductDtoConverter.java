@@ -1,15 +1,14 @@
 package com.spring.marketplace.utils.converter;
 
 import com.spring.marketplace.dto.GetProductResponse;
-import com.spring.marketplace.model.Product;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EntityToReadProductDtoConverter implements Converter<Product, GetProductResponse> {
+public class ProductToReadProductDtoConverter implements Converter<com.spring.marketplace.model.Product, GetProductResponse> {
 
     @Override
-    public GetProductResponse convert(Product product) {
+    public GetProductResponse convert(com.spring.marketplace.model.Product product) {
         return GetProductResponse.builder()
                 .name(product.getName())
                 .price(product.getPrice())

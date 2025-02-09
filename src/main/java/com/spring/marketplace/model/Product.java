@@ -1,5 +1,6 @@
 package com.spring.marketplace.model;
 
+import com.spring.marketplace.model.enums.Categories;
 import jakarta.persistence.Version;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

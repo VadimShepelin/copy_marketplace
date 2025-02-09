@@ -1,7 +1,7 @@
 package com.spring.marketplace.dto;
 
 
-import com.spring.marketplace.model.Categories;
+import com.spring.marketplace.model.enums.Categories;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;

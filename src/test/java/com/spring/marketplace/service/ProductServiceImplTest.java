@@ -4,7 +4,6 @@ import com.spring.marketplace.dto.CreateProductDto;
 import com.spring.marketplace.dto.GetProductResponse;
 import com.spring.marketplace.dto.UpdateProductDto;
 import com.spring.marketplace.exception.ApplicationException;
-import com.spring.marketplace.model.Product;
 import com.spring.marketplace.repository.ProductRepository;
 import com.spring.marketplace.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +35,7 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Find product by id successfully")
     void getProductById_shouldReturnProduct() {
-        Product product = createProduct();
+        com.spring.marketplace.model.Product product = createProduct();
         GetProductResponse getProductResponse = createGetProductResponse();
 
         doReturn(Optional.of(product)).when(productRepository).findById(product.getId());
@@ -51,7 +50,7 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Get all products list successfully")
     void getAllProducts_shouldReturnProductsList() {
-        Product product = createProduct();
+        com.spring.marketplace.model.Product product = createProduct();
         GetProductResponse getProductResponse = createGetProductResponse();
         Page page = createPage(product);
 
@@ -67,7 +66,7 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Successfully delete the product")
     void deleteProduct_shouldDeleteProduct() {
-        Product product = createProduct();
+        com.spring.marketplace.model.Product product = createProduct();
 
         doReturn(Optional.of(product)).when(productRepository).findById(product.getId());
         doNothing().when(productRepository).deleteById(product.getId());
@@ -81,13 +80,13 @@ class ProductServiceImplTest {
     @DisplayName("Successfully save the product")
     void saveProduct_shouldSaveProduct() {
         CreateProductDto productDto = createProductDto();
-        Product product = createProduct();
+        com.spring.marketplace.model.Product product = createProduct();
         GetProductResponse getProductResponse = createGetProductResponse();
 
         doReturn(Optional.empty()).when(productRepository).findBySku(productDto.getSku());
-        doReturn(product).when(conversionService).convert(productDto,Product.class);
+        doReturn(product).when(conversionService).convert(productDto, com.spring.marketplace.model.Product.class);
         doReturn(product).when(productRepository).save(product);
-        doReturn(getProductResponse).when(conversionService).convert(product,GetProductResponse.class);
+        doReturn(getProductResponse).when(conversionService).convert(product, GetProductResponse.class);
 
         GetProductResponse actualResult = productService.saveProduct(productDto);
 
@@ -99,12 +98,12 @@ class ProductServiceImplTest {
     @DisplayName("Successfully updated the product")
     void updateProduct_shouldUpdateProduct() {
         UpdateProductDto productDto = createUpdateProductDto();
-        Product product = createProduct();
+        com.spring.marketplace.model.Product product = createProduct();
         GetProductResponse getProductResponse = createGetProductResponse();
 
         doReturn(Optional.of(product)).when(productRepository).findBySku(productDto.getSku());
         doReturn(product).when(productRepository).save(product);
-        doReturn(getProductResponse).when(conversionService).convert(product,GetProductResponse.class);
+        doReturn(getProductResponse).when(conversionService).convert(product, GetProductResponse.class);
 
         GetProductResponse actualResult = productService.updateProduct(productDto);
 
@@ -115,7 +114,7 @@ class ProductServiceImplTest {
     @Test
     @DisplayName("Product by this id not found")
     void getProductById_shouldThrowException_whenProductNotFound() {
-        Product product = createProduct();
+        com.spring.marketplace.model.Product product = createProduct();
 
         doReturn(Optional.empty()).when(productRepository).findById(product.getId());
 
@@ -134,7 +133,7 @@ class ProductServiceImplTest {
     @DisplayName("Save product with sku that already exists")
     void saveProduct_shouldThrowException_whenProductWithThisSkuAlreadyExists(){
         CreateProductDto productDto = createProductDto();
-        Product product = createProduct();
+        com.spring.marketplace.model.Product product = createProduct();
 
         doReturn(Optional.of(product)).when(productRepository).findBySku(productDto.getSku());
 

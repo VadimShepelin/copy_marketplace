@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class CreateProductDtoToEntityConverter implements Converter<CreateProductDto, Product> {
+public class CreateProductDtoToProductConverter implements Converter<CreateProductDto, Product> {
 
     @Override
     public Product convert(CreateProductDto productDto) {

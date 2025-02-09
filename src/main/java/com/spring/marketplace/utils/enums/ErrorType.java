@@ -8,7 +8,12 @@ public enum ErrorType {
     UNIQUE_CONSTRAINT_EXCEPTION("A product with the same sku already exists"),
     FAILED_TO_UPLOAD_FILE("Failed to upload file"),
     FAILED_TO_DOWNLOAD_FILE("Failed to download file"),
-    FAILED_TO_CONVERT_CURRENCY("Failed to convert currency"),;
+    FAILED_TO_CONVERT_CURRENCY("Failed to convert currency"),
+    NO_SUCH_USER("No such user"),
+    NOT_SUCH_ORDER("Not such order"),
+    INSUFFICIENT_QUANTITY_OF_PRODUCTS("Insufficient quantity of goods"),
+    FAILED_TO_CHANGE_ORDER_STATUS("Failed to change order status"),
+    FAILED_TO_UPDATE_ORDER_PRODUCTS("Failed to update order products");
 
 
     private final String message;

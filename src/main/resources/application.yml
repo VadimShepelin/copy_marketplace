@@ -6,6 +6,12 @@ spring:
      username: postgres
      url: jdbc:postgresql://localhost:5432/marketplace
      driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
   redis:
     host: localhost
     port: 6378
@@ -16,7 +22,7 @@ app:
     rate-value: 1
   scheduling:
     period: 30000
-    enabled: true
+    enabled: false
   file:
     path: C:\\marketplace\\marketplace\\src\\main\\resources\\reports\\
   download-upload:

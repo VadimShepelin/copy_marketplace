@@ -1,7 +1,7 @@
 package com.spring.marketplace.dto;
 
 
-import com.spring.marketplace.model.Categories;
+import com.spring.marketplace.model.enums.Categories;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -135,4 +136,38 @@ public class ProductServiceImpl implements ProductService {
         log.info("Found {} products", productsList);
         return productsList.stream().map((product) -> conversionService.convert(product, GetProductResponse.class)).toList();
     }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    @LogExecutionTime
+    public GetProductResponse getProductBySku(String sku) {
+        return productRepository.findBySku(sku).
+                map((item) -> {
+                    log.info("Get product by sku successfully");
+                    return conversionService.convert(item, GetProductResponse.class);
+                })
+                .orElseThrow(() -> {
+                    log.error("Product with this sku {} not found", sku);
+                    return new ApplicationException(ErrorType.PRODUCT_NOT_FOUND);
+                });
+    }
+
+    @Override
+    @Transactional
+    @LogExecutionTime
+    public void increaseProductQuantity(String sku, BigInteger quantity) {
+        productRepository.increaseProductQuantityBySku(sku,quantity);
+        log.info("Increase product quantity successfully");
+    }
+
+    @Override
+    @Transactional
+    @LogExecutionTime
+    public void reduceProductQuantity(String sku, BigInteger quantity) {
+        productRepository.reduceProductQuantityBySku(sku,quantity);
+        log.info("Reduce product quantity successfully");
+    }
+
+
 }

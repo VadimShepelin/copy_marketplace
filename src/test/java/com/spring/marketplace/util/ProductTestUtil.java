@@ -3,8 +3,7 @@ package com.spring.marketplace.util;
 import com.spring.marketplace.dto.CreateProductDto;
 import com.spring.marketplace.dto.GetProductResponse;
 import com.spring.marketplace.dto.UpdateProductDto;
-import com.spring.marketplace.model.Categories;
-import com.spring.marketplace.model.Product;
+import com.spring.marketplace.model.enums.Categories;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import java.math.BigDecimal;
@@ -61,8 +60,8 @@ public class ProductTestUtil {
                 .build();
     }
 
-    public static Product createProduct() {
-        return Product.builder()
+    public static com.spring.marketplace.model.Product createProduct() {
+        return com.spring.marketplace.model.Product.builder()
                 .id(UUID.randomUUID())
                 .sku("TEST SKU")
                 .build();
@@ -74,7 +73,7 @@ public class ProductTestUtil {
                 .build();
     }
 
-    public static Page createPage(Product product){
+    public static Page createPage(com.spring.marketplace.model.Product product){
         return new PageImpl(List.of(product));
     }
 
