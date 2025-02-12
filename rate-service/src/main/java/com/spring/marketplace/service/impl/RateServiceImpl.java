@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RateServiceImpl implements RateService {
 
+
     @Override
     public String getRateValue(String rate) {
         log.info("Get rate value from the microservice: rate-service");
