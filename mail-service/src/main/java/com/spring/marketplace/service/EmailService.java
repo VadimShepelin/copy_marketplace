@@ -1,7 +1,8 @@
 package com.spring.marketplace.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmailService {
-    List<String> getUsersInns(List<String> email);
+    Map<String,String> getUsersInns(List<String> email);
 }
