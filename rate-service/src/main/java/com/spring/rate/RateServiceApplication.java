@@ -1,4 +1,4 @@
-package com.spring.marketplace;
+package com.spring.rate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

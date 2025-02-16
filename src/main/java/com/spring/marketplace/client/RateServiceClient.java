@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "rateClient", url = "${app.feign-client.url}")
+@FeignClient(name = "rateClient", url = "${app.feign-client.rate-service.url}")
 @Component
 public interface RateServiceClient {
 

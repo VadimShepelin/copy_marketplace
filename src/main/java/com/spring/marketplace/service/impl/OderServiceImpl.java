@@ -1,8 +1,7 @@
 package com.spring.marketplace.service.impl;
 
-import com.spring.marketplace.dto.CreateOrderDto;
-import com.spring.marketplace.dto.GetOrderResponse;
-import com.spring.marketplace.dto.UpdateOrderStateDto;
+import com.spring.marketplace.client.EmailServiceClient;
+import com.spring.marketplace.dto.*;
 import com.spring.marketplace.exception.ApplicationException;
 import com.spring.marketplace.model.Order;
 import com.spring.marketplace.model.OrderItems;
@@ -19,6 +18,9 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -31,6 +33,7 @@ public class OderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ConversionService conversionService;
     private final OrderItemsRepository orderItemsRepository;
+    private final EmailServiceClient client;
 
     @Override
     @Transactional
@@ -51,8 +54,10 @@ public class OderServiceImpl implements OrderService {
                             .orderId(order.getOrderId())
                             .build());
 
+                    GetProductResponse product = productService.getProductBySku(item.getKey());
+
                     return item.getValue().doubleValue() *
-                            productService.getProductBySku(item.getKey()).getPrice().doubleValue();
+                            product.getPrice().doubleValue();
                 }).sum();
 
         dto.getProductMap().forEach(productService::reduceProductQuantity);
@@ -89,7 +94,10 @@ public class OderServiceImpl implements OrderService {
                         return conversionService.convert(orderRepository.save(item), GetOrderResponse.class);
                     } else if (dto.getStatus() == Status.REJECTED && item.getStatus() == Status.CREATED) {
                         orderItemsRepository.findAllByOrderId(id)
-                                .forEach((element) -> productService.increaseProductQuantity(element.getSku(), element.getQuantity()));
+                                .forEach((element) -> {
+                                    productService.increaseProductQuantity(element.getSku(), element.getQuantity());
+                                    orderItemsRepository.delete(element);
+                                });
 
                         item.setStatus(Status.REJECTED);
                         log.info("Change order status to REJECTED");
@@ -146,5 +154,43 @@ public class OderServiceImpl implements OrderService {
             log.error("Failed to update order");
             throw new ApplicationException(ErrorType.FAILED_TO_UPDATE_ORDER_PRODUCTS);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderWithProductsResponse> getOrdersWithProducts() {
+        List<Order> allOrders = orderRepository.findAll();
+        List<String> ordersEmail = allOrders
+                .stream().map((item) -> item.getUser().getEmail())
+                .toList();
+        Map<String,String> userInns = client.getUsersInns(ordersEmail);
+        List<OrderWithProductsResponse> result = new ArrayList<>();
+
+        allOrders.forEach((item) -> {
+            List<ProductSkuAndQuantityDto> orderProducts = new ArrayList<>();
+            orderItemsRepository.findAllByOrderId(item.getOrderId()).
+                    forEach((element) -> {
+                        orderProducts.add(ProductSkuAndQuantityDto.builder()
+                                .sku(element.getSku())
+                                .quantity(element.getQuantity())
+                                .build());
+                    });
+
+            if(!orderProducts.isEmpty()) {
+                OrderWithProductsResponse orderResponse = OrderWithProductsResponse.builder()
+                        .orderId(item.getOrderId())
+                        .products(orderProducts)
+                        .clientInn(userInns.get(item.getUser().getEmail()))
+                        .clientEmail(item.getUser().getEmail())
+                        .clientLastName(item.getUser().getLastName())
+                        .clientFirstName(item.getUser().getFirstName())
+                        .build();
+
+                result.add(orderResponse);
+            }
+        });
+
+        log.info("Get Orders successful");
+        return result;
     }
 }

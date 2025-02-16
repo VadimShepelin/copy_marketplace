@@ -1,4 +1,4 @@
-package com.spring.marketplace.service;
+package com.spring.rate.service;
 
 public interface RateService {
 

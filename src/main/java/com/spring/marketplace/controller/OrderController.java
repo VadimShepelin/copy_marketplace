@@ -2,6 +2,7 @@ package com.spring.marketplace.controller;
 
 import com.spring.marketplace.dto.CreateOrderDto;
 import com.spring.marketplace.dto.GetOrderResponse;
+import com.spring.marketplace.dto.OrderWithProductsResponse;
 import com.spring.marketplace.dto.UpdateOrderStateDto;
 import com.spring.marketplace.service.OrderService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,5 +35,10 @@ public class OrderController {
         orderService.updateOrderProducts(dto,orderId);
 
         return ResponseEntity.ok("Add new products to order");
+    }
+
+    @GetMapping
+    public List<OrderWithProductsResponse> getOrdersWithProducts() {
+        return orderService.getOrdersWithProducts();
     }
 }

@@ -28,6 +28,9 @@ public class User {
     @Column(name = "lastname")
     private String lastName;
 
+    @Column(name = "email")
+    private String email;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Order> orders;

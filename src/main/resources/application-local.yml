@@ -27,7 +27,10 @@ app:
   json:
     path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
   feign-client:
-    url: http://localhost:8080/
+    rate-service:
+      url: http://localhost:8080/
+    mail-service:
+      url: http://localhost:8085/
 
 server:
   port: 8081

@@ -3,8 +3,10 @@ package com.spring.marketplace.service;
 
 import com.spring.marketplace.dto.CreateOrderDto;
 import com.spring.marketplace.dto.GetOrderResponse;
+import com.spring.marketplace.dto.OrderWithProductsResponse;
 import com.spring.marketplace.dto.UpdateOrderStateDto;
 import com.spring.marketplace.model.enums.Status;
+import java.util.List;
 import java.util.UUID;
 
 public interface OrderService {
@@ -17,4 +19,6 @@ public interface OrderService {
     GetOrderResponse getOrderById(UUID id);
 
     void updateOrderProducts(CreateOrderDto dto, UUID id);
+
+    List<OrderWithProductsResponse> getOrdersWithProducts();
 }
