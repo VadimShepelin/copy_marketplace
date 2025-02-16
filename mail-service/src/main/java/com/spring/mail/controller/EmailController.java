@@ -1,6 +1,6 @@
-package com.spring.marketplace.controller;
+package com.spring.mail.controller;
 
-import com.spring.marketplace.service.EmailService;
+import com.spring.mail.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

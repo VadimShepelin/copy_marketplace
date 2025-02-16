@@ -1,4 +1,4 @@
-package com.spring.marketplace.service;
+package com.spring.mail.service;
 
 import java.util.List;
 import java.util.Map;

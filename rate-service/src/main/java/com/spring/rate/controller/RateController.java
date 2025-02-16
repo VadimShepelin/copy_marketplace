@@ -1,6 +1,6 @@
-package com.spring.marketplace.controller;
+package com.spring.rate.controller;
 
-import com.spring.marketplace.service.RateService;
+import com.spring.rate.service.RateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

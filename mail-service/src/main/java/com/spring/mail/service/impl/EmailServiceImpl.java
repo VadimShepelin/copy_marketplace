@@ -1,6 +1,6 @@
-package com.spring.marketplace.service.impl;
+package com.spring.mail.service.impl;
 
-import com.spring.marketplace.service.EmailService;
+import com.spring.mail.service.EmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
