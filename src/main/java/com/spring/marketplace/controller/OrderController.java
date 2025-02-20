@@ -5,7 +5,7 @@ import com.spring.marketplace.dto.GetOrderResponse;
 import com.spring.marketplace.dto.OrderWithProductsResponse;
 import com.spring.marketplace.dto.UpdateOrderStateDto;
 import com.spring.marketplace.service.OrderService;
-import com.spring.source.events.EventSource;
+import com.spring.marketplace.events.EventSource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;

@@ -12,10 +12,7 @@ import com.spring.marketplace.service.OrderService;
 import com.spring.marketplace.service.ProductService;
 import com.spring.marketplace.service.UserService;
 import com.spring.marketplace.utils.enums.ErrorType;
-import com.spring.source.events.CancelledOrderEvent;
-import com.spring.source.events.CompletedOrderEvent;
-import com.spring.source.events.CreateOrderEvent;
-import com.spring.source.events.EventSource;
+import com.spring.marketplace.events.EventSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -199,36 +196,8 @@ public class OderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
     public void handleOrderEvent(EventSource eventSource) {
-        if(eventSource instanceof CreateOrderEvent) {
-           CreateOrderEvent event =  (CreateOrderEvent)eventSource;
-
-           CreateOrderDto createOrderDto = CreateOrderDto.builder()
-                    .productMap(event.getProductMap())
-                    .build();
-
-            createOrder(createOrderDto, event.getUserId());
-        }
-
-        else if(eventSource instanceof CancelledOrderEvent){
-            CancelledOrderEvent event = (CancelledOrderEvent)eventSource;
-
-            UpdateOrderStateDto updateOrderDto = UpdateOrderStateDto.builder()
-                    .status(Status.CANCELLED)
-                    .build();
-
-            updateOrderState(updateOrderDto, event.getOrderId());
-        }
-
-        else if(eventSource instanceof CompletedOrderEvent){
-            CompletedOrderEvent event = (CompletedOrderEvent)eventSource;
-
-            UpdateOrderStateDto updateOrderDto = UpdateOrderStateDto.builder()
-                    .status(Status.DONE)
-                    .build();
-
-            updateOrderState(updateOrderDto, event.getOrderId());
-        }
+        log.info("calling method handleOrderEvent");
+        eventSource.handleEvent(this);
     }
 }

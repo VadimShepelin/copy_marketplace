@@ -6,8 +6,7 @@ import com.spring.marketplace.dto.GetOrderResponse;
 import com.spring.marketplace.dto.OrderWithProductsResponse;
 import com.spring.marketplace.dto.UpdateOrderStateDto;
 import com.spring.marketplace.model.enums.Status;
-import com.spring.source.events.EventSource;
-
+import com.spring.marketplace.events.EventSource;
 import java.util.List;
 import java.util.UUID;
 

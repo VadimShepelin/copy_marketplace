@@ -1,6 +1,8 @@
-package com.spring.source.events;
+package com.spring.marketplace.events;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.spring.marketplace.dto.CreateOrderDto;
+import com.spring.marketplace.service.OrderService;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.math.BigInteger;
@@ -22,4 +24,13 @@ public class CreateOrderEvent implements EventSource {
     private UUID userId;
 
     private Event event = Event.CREATE_ORDER;
+
+    @Override
+    public void handleEvent(OrderService service) {
+        CreateOrderDto createOrderDto = CreateOrderDto.builder()
+                .productMap(this.getProductMap())
+                .build();
+
+        service.createOrder(createOrderDto, this.getUserId());
+    }
 }
