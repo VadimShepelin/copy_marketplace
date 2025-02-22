@@ -5,6 +5,7 @@ import com.spring.marketplace.dto.GetOrderResponse;
 import com.spring.marketplace.dto.OrderWithProductsResponse;
 import com.spring.marketplace.dto.UpdateOrderStateDto;
 import com.spring.marketplace.service.OrderService;
+import com.spring.marketplace.events.EventSource;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,12 @@ public class OrderController {
     @GetMapping
     public List<OrderWithProductsResponse> getOrdersWithProducts() {
         return orderService.getOrdersWithProducts();
+    }
+
+    @PostMapping("/handle")
+    public ResponseEntity<String> handleOrderEvent(@Valid @RequestBody EventSource eventSource) {
+        orderService.handleOrderEvent(eventSource);
+
+        return ResponseEntity.ok("Order event handled successfully");
     }
 }

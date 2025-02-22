@@ -12,6 +12,7 @@ import com.spring.marketplace.service.OrderService;
 import com.spring.marketplace.service.ProductService;
 import com.spring.marketplace.service.UserService;
 import com.spring.marketplace.utils.enums.ErrorType;
+import com.spring.marketplace.events.EventSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -92,14 +93,14 @@ public class OderServiceImpl implements OrderService {
                         item.setStatus(Status.DONE);
                         log.info("Change order status to DONE");
                         return conversionService.convert(orderRepository.save(item), GetOrderResponse.class);
-                    } else if (dto.getStatus() == Status.REJECTED && item.getStatus() == Status.CREATED) {
+                    } else if ((dto.getStatus() == Status.REJECTED || dto.getStatus() == Status.CANCELLED) && item.getStatus() == Status.CREATED) {
                         orderItemsRepository.findAllByOrderId(id)
                                 .forEach((element) -> {
                                     productService.increaseProductQuantity(element.getSku(), element.getQuantity());
                                     orderItemsRepository.delete(element);
                                 });
 
-                        item.setStatus(Status.REJECTED);
+                        item.setStatus(dto.getStatus());
                         log.info("Change order status to REJECTED");
                         return conversionService.convert(orderRepository.save(item), GetOrderResponse.class);
                     }
@@ -192,5 +193,11 @@ public class OderServiceImpl implements OrderService {
 
         log.info("Get Orders successful");
         return result;
+    }
+
+    @Override
+    public void handleOrderEvent(EventSource eventSource) {
+        log.info("calling method handleOrderEvent");
+        eventSource.handleEvent(this);
     }
 }
