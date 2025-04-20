@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient(name = "emailClient", url = "${app.feign-client.mail-service.url}")
+@FeignClient(name = "email-service", url = "${app.feign-client.mail-service.url}")
 @Component
 public interface EmailServiceClient {
 

@@ -38,14 +38,14 @@ app:
     path: C:\\marketplace\\marketplace\\src\\main\\resources\\files\\
   json:
     path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
-  feign-client:
-    rate-service:
-         url: http://localhost:8080/
-    mail-service:
-         url: http://localhost:8085/
 
 server.port: 0
 
 eureka:
   client:
-    enabled: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
