@@ -1,12 +1,7 @@
 package com.spring.marketplace.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Builder;
+import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@ToString(exclude = {"id","orders"})
 @Setter
 @Builder
 public class User {
@@ -26,10 +22,10 @@ public class User {
     private String firstName;
 
     @Column(name = "lastname")
-    private String lastName;
+    private String lastNameConfidential;
 
     @Column(name = "email")
-    private String email;
+    private String emailConfidential;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

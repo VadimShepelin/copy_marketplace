@@ -44,7 +44,7 @@ app:
     mail-service:
          url: http://localhost:8085/
 
-server.port: 0
+server.port: 9000
 
 eureka:
   client:

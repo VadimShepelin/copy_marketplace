@@ -39,7 +39,7 @@ app:
   json:
     path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
 
-server.port: 0
+server.port: 8086
 
 eureka:
   client:

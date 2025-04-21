@@ -162,7 +162,7 @@ public class OderServiceImpl implements OrderService {
     public List<OrderWithProductsResponse> getOrdersWithProducts() {
         List<Order> allOrders = orderRepository.findAll();
         List<String> ordersEmail = allOrders
-                .stream().map((item) -> item.getUser().getEmail())
+                .stream().map((item) -> item.getUser().getEmailConfidential())
                 .toList();
         Map<String,String> userInns = client.getUsersInns(ordersEmail);
         List<OrderWithProductsResponse> result = new ArrayList<>();
@@ -181,9 +181,9 @@ public class OderServiceImpl implements OrderService {
                 OrderWithProductsResponse orderResponse = OrderWithProductsResponse.builder()
                         .orderId(item.getOrderId())
                         .products(orderProducts)
-                        .clientInn(userInns.get(item.getUser().getEmail()))
-                        .clientEmail(item.getUser().getEmail())
-                        .clientLastName(item.getUser().getLastName())
+                        .clientInn(userInns.get(item.getUser().getEmailConfidential()))
+                        .clientEmail(item.getUser().getEmailConfidential())
+                        .clientLastName(item.getUser().getLastNameConfidential())
                         .clientFirstName(item.getUser().getFirstName())
                         .build();
 
