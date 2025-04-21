@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <conversionRule conversionWord="mask" converterClass="com.spring.marketplace.utils.converter.MaskingPatternConverter"/>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <if condition='isDefined("LOKI")'>
+        <then>
+            <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+                <http>
+                    <url>${LOKI}/loki/api/v1/push</url>
+                </http>
+                <format>
+                    <label>
+                        <pattern>app=marketplace-service,host=${HOSTNAME},level=%level</pattern>
+                    </label>
+                    <message>
+                        <pattern>l=%level h=${HOSTNAME} c=%logger{20} t=%thread | %mask(%msg) %ex</pattern>
+                    </message>
+                    <sortByTime>true</sortByTime>
+                </format>
+            </appender>
+
+            <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{3}: %mask(%msg%n)</pattern>
+                    <charset>utf-8</charset>
+                </encoder>
+            </appender>
+
+            <root level="info">
+                <appender-ref ref="console"/>
+                <appender-ref ref="LOKI"/>
+            </root>
+        </then>
+        <else>
+            <root level="info">
+                <appender-ref ref="CONSOLE"/>
+            </root>
+        </else>
+    </if>
+
+</configuration>

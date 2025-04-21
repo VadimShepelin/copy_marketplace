@@ -13,7 +13,7 @@ public class UserToGetUserResponseConverter implements Converter<User, GetUserRe
     public GetUserResponse convert(User source) {
         return GetUserResponse.builder()
                 .firstName(source.getFirstName())
-                .lastName(source.getLastName())
+                .lastName(source.getLastNameConfidential())
                 .orders(source.getOrders().stream().
                         map((item) ->
                                 GetOrderResponse.builder()
