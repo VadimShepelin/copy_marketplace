@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: marketplace
+          uri: lb://marketplace
+          predicates:
+            - Path=/api/v1/users,/api/v1/orders,/api/v1/products,/documents
+        - id: mail-service
+          uri: lb://mail-service
+          predicates:
+            - Path=/email
+        - id: rate-service
+          uri: lb://rate-service
+          predicates:
+            - Path=/rate
+
+server:
+  port: 9091
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
