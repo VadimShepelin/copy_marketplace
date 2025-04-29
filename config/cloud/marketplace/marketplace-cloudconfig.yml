@@ -1,0 +1,59 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: consumer-group
+      properties:
+        spring.json.trusted.packages: com.*
+        spring.json.value.default.type: "com.spring.marketplace.events.EventSource"
+  datasource:
+    password: ILin47gim
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/marketplace
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  redis:
+    host: localhost
+    port: 6378
+    time-to-live: 10
+
+app:
+  default:
+    rate-value: 1
+  scheduling:
+    period: 30000
+    enabled: false
+  file:
+    path: C:\\marketplace\\marketplace\\src\\main\\resources\\reports\\
+  download-upload:
+    path: C:\\marketplace\\marketplace\\src\\main\\resources\\files\\
+  json:
+    path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  zipkin:
+    tracing:
+      endpoint: http://host.docker.internal:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1

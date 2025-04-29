@@ -1,20 +1,3 @@
-spring:
-  application:
-    name: mail-service
-  datasource:
-    password: ILin47gim
-    username: postgres
-    url: jdbc:postgresql://localhost:5432/marketplace
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-server:
-  port: 8085
-
 eureka:
   client:
     service-url:
