@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: mail-service
   datasource:
     password: ILin47gim
     username: postgres
@@ -11,9 +9,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-server:
-  port: 8085
 
 eureka:
   client:

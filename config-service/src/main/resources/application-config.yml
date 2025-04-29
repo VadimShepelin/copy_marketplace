@@ -1,0 +1,10 @@
+spring:
+  application:
+     name: config-service
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: C:\\marketplace\\marketplace\\config\\cloud\\{application}
+server:
+  port: 8888
