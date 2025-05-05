@@ -16,6 +16,15 @@ spring:
           uri: lb://rate-service
           predicates:
             - Path=/rate
+        - id: marketplace-orders
+          uri: lb://marketplace
+          predicates:
+            - Path=/api/v1/orders
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: OrdersCircuitBreaker
+                fallbackUri: forward:/fallback
 
 server:
   port: 9091
@@ -28,9 +37,3 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: prometheus

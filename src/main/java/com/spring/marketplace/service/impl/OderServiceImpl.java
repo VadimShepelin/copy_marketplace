@@ -16,13 +16,11 @@ import com.spring.marketplace.events.EventSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -125,6 +123,19 @@ public class OderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<GetOrderResponse> getOrdersByStatus(int pageNo, int pageSize) {
+        return Optional.of(orderRepository.findOrdersByStatus(PageRequest.of(pageNo,pageSize)))
+                .map((page) -> {
+                    log.info("Call fallback method getOrderByStatus");
+                    return page.map((item) -> conversionService.convert(item,GetOrderResponse.class)).stream().toList();
+                })
+                .orElseThrow(() -> {
+                    log.error("No orders found");
+                    return new ApplicationException(ErrorType.NO_ORDERS_FOUND);
+                });
+    }
+
+    @Override
     @Transactional
     public void updateOrderProducts(CreateOrderDto dto, UUID id) {
         validateOrder(dto);
@@ -159,8 +170,9 @@ public class OderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderWithProductsResponse> getOrdersWithProducts() {
-        List<Order> allOrders = orderRepository.findAll();
+    public List<OrderWithProductsResponse> getOrdersWithProducts(int pageNo, int pageSize) {
+        List<Order> allOrders = orderRepository.findOrdersByStatus(PageRequest.of(pageNo,pageSize))
+                .toList();
         List<String> ordersEmail = allOrders
                 .stream().map((item) -> item.getUser().getEmailConfidential())
                 .toList();

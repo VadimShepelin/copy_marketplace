@@ -1,6 +1,8 @@
 package com.spring.marketplace.repository;
 
 import com.spring.marketplace.model.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
             "where o.orderId = :id")
     @Modifying
     int updateOrderTotalCost(UUID id, double cost);
+
+    @Query("SELECT o FROM Order o WHERE o.status = 'DONE' OR o.status = 'CREATED'")
+    Page<Order> findOrdersByStatus(Pageable pageable);
 }

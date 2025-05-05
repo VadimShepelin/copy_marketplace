@@ -6,6 +6,7 @@ import com.spring.marketplace.dto.OrderWithProductsResponse;
 import com.spring.marketplace.dto.UpdateOrderStateDto;
 import com.spring.marketplace.service.OrderService;
 import com.spring.marketplace.events.EventSource;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,9 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<OrderWithProductsResponse> getOrdersWithProducts() {
-        return orderService.getOrdersWithProducts();
+    @CircuitBreaker(name = "getOrdersWithProducts", fallbackMethod = "getOrdersByStatus")
+    public List<OrderWithProductsResponse> getOrdersWithProducts(@RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "5") int pageSize) {
+        return orderService.getOrdersWithProducts(pageNo,pageSize);
     }
 
     @PostMapping("/handle")
@@ -48,5 +50,10 @@ public class OrderController {
         orderService.handleOrderEvent(eventSource);
 
         return ResponseEntity.ok("Order event handled successfully");
+    }
+
+    @GetMapping("/fallback")
+    public List<GetOrderResponse> getOrdersByStatus(@RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "3") int pageSize, Exception ex){
+        return orderService.getOrdersByStatus(pageNo,pageSize);
     }
 }

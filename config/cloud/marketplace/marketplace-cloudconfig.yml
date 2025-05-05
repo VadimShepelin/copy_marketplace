@@ -24,6 +24,15 @@ spring:
     port: 6378
     time-to-live: 10
 
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        waitDurationInOpenState: 20s
+        failure-rate-threshold: 50
+        sliding-window-size: 3
+
 app:
   default:
     rate-value: 1
