@@ -1,6 +1,8 @@
 spring.application.name: marketplace
 
 spring:
+  config:
+    import: 'optional:configserver:'
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
@@ -49,6 +51,15 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${server.port}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        waitDurationInOpenState: 40s
+        failure-rate-threshold: 50
+        sliding-window-size: 3
 
 management:
   endpoints:

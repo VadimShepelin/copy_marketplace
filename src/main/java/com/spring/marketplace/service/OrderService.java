@@ -21,7 +21,9 @@ public interface OrderService {
 
     GetOrderResponse getOrderById(UUID id);
 
+    List<GetOrderResponse> getOrdersByStatus(int pageNo, int pageSize);
+
     void updateOrderProducts(CreateOrderDto dto, UUID id);
 
-    List<OrderWithProductsResponse> getOrdersWithProducts();
+    List<OrderWithProductsResponse> getOrdersWithProducts(int pageNo, int pageSize);
 }

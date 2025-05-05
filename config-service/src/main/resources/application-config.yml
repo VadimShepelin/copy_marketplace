@@ -1,10 +1,21 @@
 spring:
   application:
-     name: config-service
+    name: config-service
   cloud:
     config:
       server:
-        native:
-          search-locations: C:\\marketplace\\marketplace\\config\\cloud\\{application}
+        git:
+          uri: git@github.com:VadimShepelin/marketplace.git
+          default-label: develop
+          search-paths: config/cloud/{application}
 server:
   port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
