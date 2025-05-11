@@ -34,6 +34,8 @@ resilience4j:
         sliding-window-size: 3
 
 app:
+  server:
+    url: http://localhost:${server.port}
   default:
     rate-value: 1
   scheduling:

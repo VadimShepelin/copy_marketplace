@@ -16,7 +16,7 @@ public class ProductGlobalExceptionHandler {
                 .body(ErrorDetails.builder()
                         .timestamp(LocalDateTime.now())
                         .exceptionClass(ex.getClass().getSimpleName())
-                        .message(ex.getMessage())
+                        .message(ex.getLocalizedMessage())
                         .build());
     }
 

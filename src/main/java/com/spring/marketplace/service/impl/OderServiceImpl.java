@@ -45,7 +45,8 @@ public class OderServiceImpl implements OrderService {
                 .user(userService.getUserById(id))
                 .build();
 
-        double orderTotalPrice = dto.getProductMap().entrySet().stream()
+        BigDecimal orderTotalPrice = BigDecimal.valueOf(dto.getProductMap()
+                .entrySet().stream()
                 .mapToDouble((item) -> {
                     orderItemsRepository.save(OrderItems.builder()
                             .sku(item.getKey())
@@ -57,12 +58,12 @@ public class OderServiceImpl implements OrderService {
 
                     return item.getValue().doubleValue() *
                             product.getPrice().doubleValue();
-                }).sum();
+                }).sum());
 
         dto.getProductMap().forEach(productService::reduceProductQuantity);
         log.info("Update Quantity was successful");
 
-        order.setTotalCost(BigDecimal.valueOf(orderTotalPrice));
+        order.setTotalCost(orderTotalPrice);
 
         log.info("Save order: {}", order);
         return conversionService.convert(orderRepository.save(order), GetOrderResponse.class);
@@ -146,7 +147,8 @@ public class OderServiceImpl implements OrderService {
         });
 
         if (order.getStatus() == Status.CREATED) {
-            double totalProductPrice = dto.getProductMap().entrySet().stream()
+            BigDecimal totalProductPrice = BigDecimal.valueOf(dto.getProductMap()
+                    .entrySet().stream()
                     .mapToDouble((item) -> {
                         orderItemsRepository.save(OrderItems.builder()
                                 .sku(item.getKey())
@@ -156,9 +158,9 @@ public class OderServiceImpl implements OrderService {
 
                         return item.getValue().doubleValue() *
                                 productService.getProductBySku(item.getKey()).getPrice().doubleValue();
-                    }).sum();
+                    }).sum());
 
-            orderRepository.updateOrderTotalCost(id, totalProductPrice);
+            orderRepository.updateOrderTotalCost(id, totalProductPrice.doubleValue());
             dto.getProductMap().forEach(productService::reduceProductQuantity);
             log.info("Update Order successful");
         }

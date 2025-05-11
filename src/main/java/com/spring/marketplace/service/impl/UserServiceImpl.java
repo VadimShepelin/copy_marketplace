@@ -12,6 +12,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -35,8 +36,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public List<GetUserResponse> getAllUsers() {
-        return userRepository.findAllUsers().stream()
-                .map((item) -> conversionService.convert(item, GetUserResponse.class))
-                .toList();
+        List<User> users = userRepository.findAllUsers();
+
+        return Optional.of(users)
+                .filter((item) -> !item.isEmpty())
+                .flatMap((item) -> Optional.of(item.stream()
+                        .map((element) -> conversionService.convert(element, GetUserResponse.class))
+                        .toList()))
+                .orElseThrow(() -> {
+                    log.error("No Users found");
+                    return new ApplicationException(ErrorType.NO_USERS_FOUND);
+                });
     }
 }

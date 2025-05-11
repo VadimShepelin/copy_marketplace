@@ -1,4 +1,12 @@
 spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+  cloud:
+    config:
+      enabled: false
+  h2:
+    console:
+      enabled: true
   datasource:
     url: jdbc:h2:mem:mydb
     username: sa
@@ -9,17 +17,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  redis:
-    host: localhost
-    port: 6378
-    time-to-live: 10
 
 app:
+  server:
+    url: http://localhost:${server.port}
   default:
     rate-value: 1
   scheduling:
     period: 30000
-    enabled: true
+    enabled: false
   file:
     path: C:\\marketplace\\marketplace\\src\\main\\resources\\reports\\
   download-upload:
@@ -35,3 +41,8 @@ app:
 server:
   port: 8081
 
+management:
+  zipkin:
+    tracing:
+      export:
+        enabled: false
