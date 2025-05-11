@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -122,15 +123,19 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @LogExecutionTime
     public List<GetProductResponse> searchProductsWithFilter(ProductFilterDto productFilter) {
-        List<Product> productsList = Optional.of(productRepository.findAll(
+        List<Product> productsList = productRepository.findAll(
                 Specification.where(ProductSpecification.byName(productFilter.getName()))
                         .and(ProductSpecification.byQuantity(productFilter.getQuantity()))
                         .and(ProductSpecification.byPrice(productFilter.getPrice()))
                         .and(ProductSpecification.byAvailability(productFilter.getIsAvailable()))
-        )).orElseThrow(() -> {
-            log.error("No products found");
-            return new ApplicationException(ErrorType.NO_PRODUCTS_FOUND);
-        });
+        );
+
+        Optional.of(productsList)
+                .filter((item) -> !productsList.isEmpty())
+                .orElseThrow(() -> {
+                    log.error("No such products");
+                    return new ApplicationException(ErrorType.NO_PRODUCTS_FOUND);
+                });
 
         reportService.exportAllProductsInXlsxFile(productsList);
         log.info("Found {} products", productsList);

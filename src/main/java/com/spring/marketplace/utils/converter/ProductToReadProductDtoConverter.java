@@ -17,7 +17,7 @@ public class ProductToReadProductDtoConverter implements Converter<com.spring.ma
                 .quantity(product.getQuantity())
                 .category(product.getCategory())
                 .sku(product.getSku())
-                .updated_at(product.getUpdatedAt())
+                .updatedAt(product.getUpdatedAt())
                 .build();
     }
 }

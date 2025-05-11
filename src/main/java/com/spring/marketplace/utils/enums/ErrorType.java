@@ -14,7 +14,8 @@ public enum ErrorType {
     INSUFFICIENT_QUANTITY_OF_PRODUCTS("Insufficient quantity of goods"),
     FAILED_TO_CHANGE_ORDER_STATUS("Failed to change order status"),
     FAILED_TO_UPDATE_ORDER_PRODUCTS("Failed to update order products"),
-    NO_ORDERS_FOUND("No orders found in database");
+    NO_ORDERS_FOUND("No orders found in database"),
+    NO_USERS_FOUND("No users found in database");
 
 
     private final String message;

@@ -29,6 +29,8 @@ spring:
     time-to-live: 10
 
 app:
+  server:
+    url: http://localhost:${server.port}
   default:
     rate-value: 1
   scheduling:
@@ -41,7 +43,9 @@ app:
   json:
     path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
 
-server.port: 8086
+server:
+   port: 8086
+   host: localhost
 
 eureka:
   client:

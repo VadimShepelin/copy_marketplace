@@ -1,6 +1,9 @@
 spring.application.name: marketplace
 
 spring:
+  cloud:
+    config:
+      enabled: false
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
@@ -27,6 +30,8 @@ spring:
     time-to-live: 10
 
 app:
+  server:
+    url: http://localhost:${server.port}
   default:
     rate-value: 1
   scheduling:
@@ -44,8 +49,16 @@ app:
     mail-service:
          url: http://localhost:8085/
 
-server.port: 9000
+server:
+   port: 9000
+   host: localhost
 
 eureka:
   client:
     enabled: false
+
+management:
+  zipkin:
+    tracing:
+      export:
+        enabled: false
