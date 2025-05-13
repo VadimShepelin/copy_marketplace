@@ -22,14 +22,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Set up Java and Maven
+      - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
-      - name: Build with maven
-        run: mvn clean install -DskipTests
+      - name: Setup Maven
+        uses: s4u/setup-maven-action@
+      - name: Run Maven
+        uses: mvn clean package -DskipTests
       - name: Build image of Markeplace api
         run: docker build -f Dockerfile -t marketplace:latest .
   deploy:
