@@ -1,6 +1,5 @@
 package com.spring.marketplace.config;
 
-
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -23,7 +22,7 @@ public class OpenApiConfig {
         server.setDescription("Development");
 
         Contact myContact = new Contact();
-        myContact.setName("Vadim Shepelin");
+        myContact.setName("Vadim");
         myContact.setEmail("my.email@example.com");
 
         Info info = new Info()

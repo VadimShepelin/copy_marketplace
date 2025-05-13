@@ -1,6 +1,9 @@
 spring.application.name: mail-service
 
 spring:
+  cloud:
+    config:
+      enabled: false
   datasource:
     password: ILin47gim
     username: postgres
@@ -17,3 +20,9 @@ server.port: 8085
 eureka:
   client:
     enabled: false
+
+management:
+  zipkin:
+    tracing:
+      export:
+        enabled: false

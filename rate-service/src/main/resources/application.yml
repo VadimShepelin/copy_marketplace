@@ -1,5 +1,9 @@
-spring.application:
-  name: rate-service
+spring:
+  application:
+    name: rate-service
+  cloud:
+    config:
+      enabled: false
 
 server:
   port: 8080
@@ -7,3 +11,9 @@ server:
 eureka:
   client:
     enabled: false
+
+management:
+  zipkin:
+    tracing:
+      export:
+        enabled: false
