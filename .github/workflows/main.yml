@@ -36,8 +36,10 @@ jobs:
     runs-on: self-hosted
     needs: build-test
     steps:
-      - name: Stop and remove containers, networks
-        run: docker-compose down
+      - name: Stop all containers
+        run: docker stop $(docker ps -a -q)
+      - name: Remove all containers
+        run: docker rm $(docker ps -a -q)
       - name: Remove unused data
         run: docker system prune -a -f
   deploy:
