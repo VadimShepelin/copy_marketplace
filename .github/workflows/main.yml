@@ -34,7 +34,7 @@ jobs:
         run: docker build -f Dockerfile -t marketplace:latest .
   deploy:
     runs-on: self-hosted
-    needs: prepare-environment
+    needs: build-test
     steps:
       - name: Deploy Marketplace Api
         uses: actions/checkout@v3
