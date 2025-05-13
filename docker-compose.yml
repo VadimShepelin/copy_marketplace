@@ -25,7 +25,6 @@ services:
     image: rate
     build:
       context: ./rate-service
-      dockerfile: Dockerfile
     container_name: rate
     ports:
       - "8080:8080"
