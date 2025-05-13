@@ -27,7 +27,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Setup Maven
+      - name: Setup maven
         uses: s4u/setup-maven-action@
       - name: Run Maven
         uses: mvn clean package -DskipTests
