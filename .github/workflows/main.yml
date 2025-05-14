@@ -39,7 +39,7 @@ jobs:
         run: cd rate-service
       - name: Run maven rate api
         run: mvn clean package -DskipTests
-      - name: Build image of Rate Api
+      - name: Build image of rate Api
         run: docker build -f Dockerfile -t rate:latest .
   deploy:
     runs-on: self-hosted
