@@ -47,8 +47,8 @@ jobs:
     steps:
       - name: Deploy Marketplace Api
         uses: actions/checkout@v3
-      - name: Docker container prune
-        run: docker container prune
+      - name: Cleanup container
+        uses: kacus/github-action-container-cleanup@v1.0.0
       - name: Run Docker container
         run: docker-compose up -d
 
