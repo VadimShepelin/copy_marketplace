@@ -45,7 +45,7 @@ jobs:
     runs-on: self-hosted
     needs: build-test
     steps:
-      - name: Deploy Marketplace api
+      - name: Deploy Marketplace Api
         uses: actions/checkout@v3
       - name: Run Docker container
         run: docker-compose up -d
