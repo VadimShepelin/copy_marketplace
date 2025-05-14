@@ -48,7 +48,7 @@ jobs:
       - name: Deploy Marketplace Api
         uses: actions/checkout@v3
       - name: Docker container prune
-        uses: docker container prune
+        run: docker container prune
       - name: Run Docker container
         run: docker-compose up -d
 
