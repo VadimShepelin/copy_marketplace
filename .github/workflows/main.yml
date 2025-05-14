@@ -37,7 +37,7 @@ jobs:
         run: docker build -f Dockerfile -t app:latest .
       - name: Go to the rate directory
         run: cd rate-service
-      - name: Run Maven rate Api
+      - name: Run Maven rate api
         run: mvn clean package -DskipTests
       - name: Build image of Rate Api
         run: docker build -f Dockerfile -t rate:latest .
