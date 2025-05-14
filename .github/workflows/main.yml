@@ -28,7 +28,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Setup maven
-        uses: s4u/setup-maven-action@
+        uses: actions/setup-maven@v3
       - name: Run Maven
         run: mvn clean package -DskipTests
       - name: Build image of Markeplace api
