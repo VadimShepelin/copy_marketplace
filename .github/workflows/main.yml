@@ -32,7 +32,7 @@ jobs:
       - name: Run Maven
         uses: mvn clean package -DskipTests
       - name: Build image of Markeplace api
-        run: docker build -f Dockerfile -t marketplace:latest .
+        run: docker build -f Dockerfile -t app:latest .
   deploy:
     runs-on: self-hosted
     needs: build-test
