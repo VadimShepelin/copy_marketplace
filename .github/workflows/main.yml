@@ -47,6 +47,10 @@ jobs:
     steps:
       - name: Deploy Marketplace Api
         uses: actions/checkout@v3
+      - name: Docker delete api container
+        run: docker rm -f api
+      - name: Docker delete Rate container
+        run: docker rm -f rate
       - name: Run Docker container
         run: docker-compose up -d
 
