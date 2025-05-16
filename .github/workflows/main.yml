@@ -59,6 +59,8 @@ jobs:
         run: docker rm -f mail
       - name: Docker delete Postgres container
         run: docker rm -f postgres
+      - name: Docker delete Kafka container
+        run: docker rm -f kafka
       - name: Run Docker container
         run: docker-compose up -d
 
