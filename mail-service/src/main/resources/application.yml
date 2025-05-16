@@ -5,7 +5,7 @@ spring:
     config:
       enabled: false
   datasource:
-    password: ILin47gim
+    password: password
     username: postgres
     url: jdbc:postgresql://87.228.83.227:5432/marketplace
     driver-class-name: org.postgresql.Driver
