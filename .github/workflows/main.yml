@@ -31,18 +31,24 @@ jobs:
         uses: stCarolas/setup-maven@v5
         with:
           maven-version: 3.8.2
+      - name: Run Maven Clean in Marketplace Api
+        run: mvn clean
       - name: Run Maven Marketplace Api
         run: mvn clean package -DskipTests
       - name: Build image of Markeplace api
         run: docker build -f Dockerfile -t app:latest .
       - name: Go to the rate directory
         run: cd rate-service
+      - name: Run maven clean in rate directory
+        run: mvn clean
       - name: Run maven rate api
         run: mvn clean package -DskipTests
       - name: Build image of rate api
         run: docker build -f Dockerfile -t rate:latest .
       - name: Go to the mail directory
         run: cd mail-service
+      - name: Run maven clean in mail directory
+        run: mvn clean
       - name: Run maven mail api
         run: mvn clean package -DskipTests
       - name: Build mail image
