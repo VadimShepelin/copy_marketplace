@@ -35,7 +35,7 @@ jobs:
         run: mvn clean
       - name: Run Maven Marketplace Api
         run: mvn clean package -DskipTests
-      - name: Build image of Markeplace api
+      - name: Build image of markeplace api
         run: docker build -f Dockerfile -t app:latest .
       - name: Go to the rate directory
         run: cd rate-service
