@@ -51,12 +51,14 @@ jobs:
     runs-on: self-hosted
     needs: build-test
     steps:
-      - name: Deploy Marketplace Api
-        uses: actions/checkout@v3
       - name: Docker delete api container
         run: docker rm -f api
       - name: Docker delete Rate container
         run: docker rm -f rate
+      - name: Docker delete Mail container
+        run: docker rm -f mail
+      - name: Docker delete Postgres container
+        run: docker rm -f postgres
       - name: Run Docker container
         run: docker-compose up -d
 
