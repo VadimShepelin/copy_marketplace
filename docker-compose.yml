@@ -17,8 +17,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: marketplace
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data/pgdata
     restart: always
 
   api:
