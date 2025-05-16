@@ -53,7 +53,7 @@ jobs:
     steps:
       - name: Docker delete api container
         run: docker rm -f api
-      - name: Docker delete Rate container
+      - name: Docker delete rate container
         run: docker rm -f rate
       - name: Docker delete Mail container
         run: docker rm -f mail
