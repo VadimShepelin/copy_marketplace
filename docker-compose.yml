@@ -25,6 +25,8 @@ services:
       context: src
     container_name: api
     restart: always
+    depends_on:
+      - postgres
     ports:
       - "8081:9000"
     env_file:
@@ -35,12 +37,16 @@ services:
     build:
       context: ./rate-service
     container_name: rate
+    depends_on:
+      - postgres
     ports:
       - "8080:8080"
     restart: always
 
   mail:
     image: mail
+    depends_on:
+      - postgres
     build:
       context: ./mail-service
     container_name: mail
