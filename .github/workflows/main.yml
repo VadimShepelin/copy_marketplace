@@ -42,7 +42,7 @@ jobs:
       - name: Build image of rate Api
         run: docker build -f Dockerfile -t rate:latest .
       - name: Go to the mail directory
-        run: cd ../mail-service
+        run: cd mail-service
       - name: Run maven mail api
         run: mvn clean package -DskipTests
       - name: Build mail image
