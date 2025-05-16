@@ -41,6 +41,9 @@ jobs:
         run: mvn clean package -DskipTests
       - name: Build image of rate Api
         run: docker build -f Dockerfile -t rate:latest .
+      - name: cd ../mail-service
+        run: mvn clean package -DskipTests
+      - name: docker build -f Dockerfile -t mail:latest .
   deploy:
     runs-on: self-hosted
     needs: build-test
