@@ -55,7 +55,7 @@ jobs:
         run: docker rm -f api
       - name: Docker delete rate container
         run: docker rm -f rate
-      - name: Docker delete Mail container
+      - name: Docker delete mail container
         run: docker rm -f mail
       - name: Docker delete Postgres container
         run: docker rm -f postgres
