@@ -6,7 +6,7 @@ spring:
       enabled: false
   kafka:
     consumer:
-      bootstrap-servers: 87.228.83.227:9092
+      bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: consumer-group
@@ -14,9 +14,9 @@ spring:
         spring.json.trusted.packages: com.*
         spring.json.value.default.type: "com.spring.marketplace.events.EventSource"
   datasource:
-     password: password
+     password: ILin47gim
      username: postgres
-     url: jdbc:postgresql://87.228.83.227:5432/marketplace
+     url: jdbc:postgresql://localhost/marketplace
      driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
@@ -26,7 +26,7 @@ spring:
 
   redis:
     host: localhost
-    port: 6378
+    port: 6379
     time-to-live: 10
 
 app:
@@ -51,7 +51,6 @@ app:
 
 server:
    port: 9000
-   host: localhost
 
 eureka:
   client:
