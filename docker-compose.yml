@@ -65,7 +65,7 @@ services:
       - "8082:8082"
     restart: always
     env_file:
-      - /mail-service/docker.env
+      - ./mail-service/docker.env
 
 networks:
   backend:
