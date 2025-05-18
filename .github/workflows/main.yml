@@ -36,13 +36,13 @@ jobs:
       - name: Build image of markeplace api
         run: docker build -f Dockerfile -t api:latest .
       - name: Run rate mail api
-        run: cd rate-service && mvn spring-boot:run
+        run: cd rate-service && mvn clean package -DskipTests
       - name: Build image of rate api
-        run: docker build -f ./rate-service/Dockerfile -t rate:latest .
+        run: docker build -f ./rate-service/Dockerfile -t rate:latest ./rate-service
       - name: Run maven mail api
         run: cd mail-service && mvn clean package -DskipTests
       - name: Build mail image
-        run: docker build -f ./mail-service/Dockerfile -t mail:latest .
+        run: docker build -f ./mail-service/Dockerfile -t mail:latest ./mail-service
   deploy:
     runs-on: self-hosted
     needs: build-test

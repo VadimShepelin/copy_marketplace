@@ -117,11 +117,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <jvmArguments>
-                        --spring.config.location=file:./mail-service/src/main/resources/application.yml
-                    </jvmArguments>
-                </configuration>
             </plugin>
         </plugins>
     </build>
