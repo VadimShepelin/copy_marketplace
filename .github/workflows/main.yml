@@ -61,7 +61,7 @@ jobs:
         run: docker rm -f postgres
       - name: Docker delete kafka container
         run: docker rm -f kafka
-      - name: Run Docker container
+      - name: Run docker container
         run: docker-compose up -d
       - name: Docker images prune
         run: docker image prune -a
