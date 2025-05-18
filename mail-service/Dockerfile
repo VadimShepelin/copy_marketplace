@@ -1,4 +1,4 @@
 FROM openjdk:17
 COPY target/*.jar  mail.jar
 ENTRYPOINT ["java", "-jar", "mail.jar"]
-CMD ["--spring.config.location=file:application.yml"]
+CMD ["--spring.config.location=file:/application.yml"]
