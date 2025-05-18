@@ -36,15 +36,11 @@ jobs:
       - name: Build image of markeplace api
         run: docker build -f Dockerfile -t api:latest .
       - name: Run rate mail api
-        run: |
-          cd rate-service
-          mvn clean package -DskipTests
+        run: cd rate-service && mvn clean package -DskipTests
       - name: Build image of rate api
         run: docker build -f ./rate-service/Dockerfile -t rate:latest .
       - name: Run maven mail api
-        run: |
-          cd mail-service
-          mvn clean package -DskipTests
+        run: cd mail-service && mvn clean package -DskipTests
       - name: Build mail image
         run: docker build -f ./mail-service/Dockerfile -t mail:latest .
   deploy:
