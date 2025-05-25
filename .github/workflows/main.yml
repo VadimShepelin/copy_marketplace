@@ -35,7 +35,7 @@ jobs:
         run: mvn clean package -DskipTests
       - name: Build image of markeplace api
         run: docker build -f Dockerfile -t api:latest .
-      - name: Run rate mail api
+      - name: Run maven rate api
         run: cd rate-service && mvn clean package -DskipTests
       - name: Build image of rate api
         run: docker build -f ./rate-service/Dockerfile -t rate:latest ./rate-service
@@ -47,16 +47,6 @@ jobs:
     runs-on: self-hosted
     needs: build-test
     steps:
-      - name: Docker delete api container
-        run: docker rm -f api
-      - name: Docker delete rate container
-        run: docker rm -f rate
-      - name: Docker delete mail container
-        run: docker rm -f mail
-      - name: Docker delete postgres container
-        run: docker rm -f postgres
-      - name: Docker delete kafka container
-        run: docker rm -f kafka
       - name: Run docker container
         run: docker-compose up -d
       - name: Docker images prune
