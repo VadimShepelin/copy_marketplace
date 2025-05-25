@@ -62,7 +62,7 @@ jobs:
       - build
       - test
     steps:
-      - name: Login to docker hub
+      - name: Login to Docker hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
