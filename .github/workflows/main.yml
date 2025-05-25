@@ -1,9 +1,9 @@
 name: Marketplace CI/CD Pipeline
 
 # Build stages
-# -Build
-# -Test
-# -Deploy
+# - Build
+# - Test
+# - Deploy
 
 on:
   push:
