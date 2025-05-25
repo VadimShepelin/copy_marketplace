@@ -12,16 +12,11 @@ on:
     branches: ["develop"]
 
 jobs:
-  build-test:
+  build:
     runs-on: self-hosted
     steps:
       - name: Get code from repository
         uses: actions/checkout@v3
-      - name: Login to docker hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -33,20 +28,36 @@ jobs:
           maven-version: 3.8.2
       - name: Run maven Marketplace Api
         run: mvn clean package -DskipTests
-      - name: Build image of markeplace api
+      - name: Build image of Markeplace Api
         run: docker build -f Dockerfile -t api:latest .
-      - name: Run maven rate api
+      - name: Run maven Rate Api
         run: cd rate-service && mvn clean package -DskipTests
-      - name: Build image of rate api
+      - name: Build image of Rate Api
         run: docker build -f ./rate-service/Dockerfile -t rate:latest ./rate-service
-      - name: Run maven mail api
+      - name: Run maven Mail Api
         run: cd mail-service && mvn clean package -DskipTests
       - name: Build mail image
         run: docker build -f ./mail-service/Dockerfile -t mail:latest ./mail-service
+
+  test:
+    runs-on: self-hosted
+    steps:
+      - name: Run Marketplace API Tests
+        run: mvn test
+      - name: Run Rate API Tests
+        run: cd rate-service && mvn test
+      - name: Run Mail API Tests
+        run: cd mail-service && mvn test
+
   deploy:
     runs-on: self-hosted
     needs: build-test
     steps:
+      - name: Login to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Run docker container
         run: docker-compose up -d
       - name: Docker images prune

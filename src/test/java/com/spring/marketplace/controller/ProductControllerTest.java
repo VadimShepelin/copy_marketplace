@@ -84,7 +84,7 @@ class ProductControllerTest {
                 when().
                 request("POST",getUrl()).
                 then().
-                statusCode(200);
+                statusCode(201);
     }
 
     @Test
