@@ -3,9 +3,6 @@ description: 'Sets up Java, Maven, and checks out the repository'
 runs:
   using: "composite"
   steps:
-    - name: Get code from repository
-      uses: actions/checkout@v3
-
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
