@@ -9,3 +9,23 @@ spring:
     username:
     password:
     driverClassName: org.h2.Driver
+
+app:
+  server:
+    url: http://localhost:${server.port}
+  default:
+    rate-value: 1
+  scheduling:
+    period: 30000
+    enabled: false
+  file:
+    path: C:\\marketplace\\marketplace\\src\\main\\resources\\reports\\
+  download-upload:
+    path: C:\\marketplace\\marketplace\\src\\main\\resources\\files\\
+  json:
+    path: C:\marketplace\marketplace\src\main\resources\json\\dollar_exchange_rate.json
+  feign-client:
+    rate-service:
+      url: http://localhost:8080/
+    mail-service:
+      url: http://localhost:8085/
