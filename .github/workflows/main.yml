@@ -47,6 +47,8 @@ jobs:
     steps:
       - name: Get code from repository
         uses: actions/checkout@v3
+      - name: Run postgres for tests
+        uses: docker run -d -p 5432:5432 postgres:latest
       - name: Setup Java and Maven environment
         uses: ./.github/actions/setup
       - name: Run Marketplace aPI Tests
