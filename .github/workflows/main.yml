@@ -22,21 +22,21 @@ jobs:
 
       # --- Build Marketplace API ---
       - name: Build Marketplace Api
-        uses: ./.github/actions/action.yml
+        uses: ./.github/actions/build
         with:
           service-path: '.'
           docker-image-name: 'api'
 
       # --- Build Rate API ---
       - name: Build Rate Api
-        uses: ./.github/actions/build/action.yml
+        uses: ./.github/actions/build
         with:
           service-path: 'rate-service'
           docker-image-name: 'rate'
 
       # --- Build Mail API ---
       - name: Build Mail Api
-        uses: ./.github/actions/build-service.yml
+        uses: ./.github/actions/build
         with:
           service-path: 'mail-service'
           docker-image-name: 'mail'
@@ -48,7 +48,7 @@ jobs:
       - name: Get code from repository
         uses: actions/checkout@v3
       - name: Setup Java and Maven environment
-        uses: ./.github/actions/setup/action.yml
+        uses: ./.github/actions/setup
       - name: Run Marketplace aPI Tests
         run: mvn test
       - name: Run Rate API Tests
