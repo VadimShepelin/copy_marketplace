@@ -1,0 +1,22 @@
+name: 'Build and Package Java Service'
+description: 'Builds a Java service with Maven and creates a Docker image.'
+inputs:
+  service-path:
+    description: 'Path to the service directory'
+    required: true
+  docker-image-name:
+    description: 'Name for the Docker image'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run Maven Build for ${{ inputs.service-path }}
+      run: |
+        cd ${{ inputs.service-path }}
+        mvn clean package -DskipTests=true
+      shell: bash
+
+    - name: Build Docker image for ${{ inputs.docker-image-name }}
+      run: docker build -f ${{ inputs.service-path }}/Dockerfile -t ${{ inputs.docker-image-name }}:latest ${{ inputs.service-path }}
+      shell: bash
