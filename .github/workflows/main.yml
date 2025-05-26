@@ -50,7 +50,7 @@ jobs:
       - name: Setup Java and Maven environment
         uses: ./.github/actions/setup
       - name: Run Marketplace aPI Tests
-        run: mvn test
+        run: mvn test -Dspring.profiles.active=test
       - name: Run Rate API Tests
         run: cd rate-service && mvn test
       - name: Run Mail API Tests
