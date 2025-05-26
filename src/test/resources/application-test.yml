@@ -1,4 +1,9 @@
 spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+  cloud:
+    config:
+      enabled: false
   datasource:
     url: jdbc:h2:mem:test
     username:
