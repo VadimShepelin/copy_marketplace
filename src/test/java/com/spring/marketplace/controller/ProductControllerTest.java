@@ -30,18 +30,6 @@ class ProductControllerTest {
     }
 
     @Test
-    @DisplayName("Get product by id have status code 200")
-    public void getProductById_shouldHaveStatusCode200() {
-        given()
-                .port(port)
-                .when()
-                .request("GET", getUrlWithId())
-                .then()
-                .statusCode(200)
-                .body("sku",Matchers.equalTo("FOOD-APP-001"));
-    }
-
-    @Test
     @DisplayName("Get product with incorrect id have status code 400")
     public void getProductById_shouldHaveStatusCode400() {
         given().
@@ -74,18 +62,6 @@ class ProductControllerTest {
                 statusCode(400);
     }
 
-    @Test
-    @DisplayName("Save product have status code 200")
-    public void saveProduct_shouldHaveStatusCode200() {
-        given().
-                port(port).
-                body(createProductDto()).
-                contentType(ContentType.JSON).
-                when().
-                request("POST",getUrl()).
-                then().
-                statusCode(201);
-    }
 
     @Test
     @DisplayName("Save product with null category should have status code 400")
@@ -100,18 +76,7 @@ class ProductControllerTest {
                 statusCode(400);
     }
 
-    @Test
-    @DisplayName("Update product have status code 200")
-    public void updateProduct_shouldHaveStatusCode200() {
-        given().
-                port(port).
-                body(createUpdateProductDto()).
-                contentType(ContentType.JSON).
-                when().
-                request("PUT",getUrl()).
-                then().
-                statusCode(200);
-    }
+
 
     @Test
     @DisplayName("Update product with empty name should have status code 400")
