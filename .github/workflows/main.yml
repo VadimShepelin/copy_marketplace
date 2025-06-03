@@ -50,10 +50,12 @@ jobs:
       - name: Setup Java and Maven environment
         uses: ./.github/actions/setup
       - name: Run postgres for test
-        run: | 
-         docker run --name=test -d -e POSTGRES_USER=${{ secrets.POSTGRES_USERNAME_TEST }}
-         -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD_TEST }} 
-         -e POSTGRES_DB=marketplace -p 5432:5432 postgres:latest
+        run: |
+             docker run --name=test -d \
+             -e POSTGRES_USER=${{ secrets.POSTGRES_USERNAME_TEST }} \
+             -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD_TEST }} \
+             -e POSTGRES_DB=marketplace \
+             -p 5432:5432 postgres:latest
       - name: Copy Json rate
         run: mkdir -p ./resources/json && cp -R ./src/main/resources/json/* ./resources/json/
       - name: Install yq
