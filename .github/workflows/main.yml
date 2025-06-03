@@ -51,6 +51,10 @@ jobs:
         uses: ./.github/actions/setup
       - name: Copy Json rate
         run: mkdir -p ./resources/json && cp -R ./src/main/resources/json/* ./resources/json/
+      - name: Install yq
+        run: sudo apt-get install -y yq
+      - name: Update JSON path in application-test.yml
+        run: yq -i '.APP_JSON_PATH = "./resources/json/dollar_exchange_rate.json"' application-test.yml
       - name: Run Marketplace aPI Tests
         run: mvn test -Dspring.profiles.active=test
       - name: Run Rate API Tests
