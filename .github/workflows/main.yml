@@ -61,7 +61,7 @@ jobs:
       - name: Install yq
         run: apt-get install -yq git
       - name: Update JSON path in application-test.yml
-        run: yq -i '.APP_JSON_PATH = "./resources/json/dollar_exchange_rate.json"' ./src/main/test/resources/application-test.yml
+        run: yq -i '.APP_JSON_PATH = "./resources/json/dollar_exchange_rate.json"' ./src/test/resources/application-test.yml
       - name: Run Marketplace aPI Tests
         run: mvn test -Dspring.profiles.active=test
       - name: Run Rate API Tests
