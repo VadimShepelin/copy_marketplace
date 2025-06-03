@@ -7,7 +7,7 @@ name: Marketplace CI/CD Pipeline
 
 on:
   push:
-    branches: ["develop","feature/task25"]
+    branches: ["develop"]
   pull_request:
     branches: ["develop"]
 
@@ -44,18 +44,20 @@ jobs:
   test:
     runs-on: self-hosted
     needs: build
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USERNAME_TEST }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_TEST }}
+          POSTGRES_DB: marketplace
+        ports:
+          - 5432:5432
     steps:
       - name: Get code from repository
         uses: actions/checkout@v3
       - name: Setup Java and Maven environment
         uses: ./.github/actions/setup
-      - name: Run postgres for test
-        run: |
-             docker rm -f test && docker run --name=test -d \
-             -e POSTGRES_USER=${{ secrets.POSTGRES_USERNAME_TEST }} \
-             -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD_TEST }} \
-             -e POSTGRES_DB=marketplace \
-             -p 5432:5432 postgres:latest
       - name: Copy Json rate
         run: mkdir -p ./resources/json && cp -R ./src/main/resources/json/* ./resources/json/
       - name: Install yq
