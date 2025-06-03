@@ -58,7 +58,7 @@ jobs:
              -p 5432:5432 postgres:latest
       - name: Copy Json rate
         run: mkdir -p ./resources/json && cp -R ./src/main/resources/json/* ./resources/json/
-      - name: Install yq
+      - name: Install Yq
         run: snap install yq
       - name: Update JSON path in application-test.yml
         run: yq -i '.app.json.path = "./resources/json/dollar_exchange_rate.json"' ./src/test/resources/application-test.yml
