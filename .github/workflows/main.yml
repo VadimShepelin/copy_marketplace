@@ -51,7 +51,7 @@ jobs:
         uses: ./.github/actions/setup
       - name: Run postgres for test
         run: |
-             docker kill test && docker run --name=test -d \
+             docker rm -f test && docker run --name=test -d \
              -e POSTGRES_USER=${{ secrets.POSTGRES_USERNAME_TEST }} \
              -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD_TEST }} \
              -e POSTGRES_DB=marketplace \
@@ -61,7 +61,7 @@ jobs:
       - name: Install yq
         run: apt-get install -yq git
       - name: Update JSON path in application-test.yml
-        run: yq -i '.APP_JSON_PATH = "./resources/json/dollar_exchange_rate.json"' ./src/test/resources/application.yml
+        run: yq -i '.APP_JSON_PATH = "./resources/json/dollar_exchange_rate.json"' ./src/main/resources/application.yml
       - name: Run Marketplace aPI Tests
         run: mvn test -Dspring.profiles.active=test
       - name: Run Rate API Tests
