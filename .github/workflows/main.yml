@@ -52,7 +52,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_TEST }}
           POSTGRES_DB: marketplace
         ports:
-          - 5432:5432
+          - 5433:5432
     steps:
       - name: Get code from repository
         uses: actions/checkout@v3
@@ -64,6 +64,8 @@ jobs:
         run: snap install yq
       - name: Update JSON path in application-test.yml
         run: yq -i '.app.json.path = "./resources/json/dollar_exchange_rate.json"' ./src/test/resources/application-test.yml
+      - name: Update Postgres port
+        run: yq -i '.spring.datasource.url = "jdbc:postgresql://localhost:5433/marketplace"' ./src/main/resources/application.yml
       - name: Run Marketplace aPI Tests
         run: mvn test -Dspring.profiles.active=test
       - name: Run Rate API Tests
