@@ -52,7 +52,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_TEST }}
           POSTGRES_DB: marketplace
         ports:
-          - 5433:5432
+          - 5433:5433
     steps:
       - name: Get code from repository
         uses: actions/checkout@v3
