@@ -50,7 +50,7 @@ jobs:
       - name: Setup Java and Maven environment
         uses: ./.github/actions/setup
       - name: Run postgres for test
-        uses: | 
+        run: | 
          docker run --name=test -d -e POSTGRES_USER=${{ secrets.POSTGRES_USERNAME_TEST }}
          -e POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD_TEST }} 
          -e POSTGRES_DB=marketplace -p 5432:5432 postgres:latest
